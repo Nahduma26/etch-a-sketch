@@ -1,7 +1,39 @@
+
+
 const container = document.querySelector(".container");
+
+let gridCount = 0;
 
 let nRows = 16;
 let nColumns = 16;
+
+function clearBox(elementID) { 
+    var div = document.querySelector(elementID); 
+     
+    while(div.firstChild) { 
+        div.removeChild(div.firstChild); 
+    } 
+} 
+
+
+function showGrid()
+{
+    clearBox(".container");
+    if (gridCount == 0)
+    {
+        defaultGrid();
+    }
+    else {
+        let nRows = prompt("How many rows do you want?");
+        let nColumns = prompt("How many columns do you want?");
+        makeGrid(nRows, nColumns);
+        let rows = document.querySelectorAll(".gridRow");
+        let cells = document.querySelectorAll(".cell");
+        console.log(rows.length);
+        console.log(cells.length);
+    }
+    gridCount++;
+}
 
 
 function defaultGrid()
@@ -44,3 +76,22 @@ function makeGrid(rowsCount, columnCount)
     // console.log(cells.length);
     
 }
+
+  
+  container.addEventListener(
+    "mouseover",
+    (event) => {
+        if (!event.target.classList.contains('cell')) {
+            // Stop event propagation
+            event.stopPropagation();
+            return;
+        }
+      // highlight the mouseover target
+      let red = Math.floor(Math.random() * 256);
+      let green = Math.floor(Math.random() * 256);
+      let blue = Math.floor(Math.random() * 256);
+      let newColor = `rgb(${red}, ${green}, ${blue})`;
+      event.target.style.background = newColor;
+    },
+    false,
+  );
